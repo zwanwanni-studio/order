@@ -1,1 +1,362 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>สั่งซื้อฟอนต์ zwanwanni.studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf7f5;
+    --surface: #ffffff;
+    --text: #2b2624;
+    --muted: #7d7470;
+    --pink: #e85ca8;
+    --pink-soft: #fde8f3;
+    --border: #eadfe3;
+    --green: #2e9d5b;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1c1819;
+      --surface: #262122;
+      --text: #f3ece9;
+      --muted: #a89d99;
+      --pink: #f06bb4;
+      --pink-soft: #3a2630;
+      --border: #3d3335;
+      --green: #4cc57d;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1c1819; --surface: #262122; --text: #f3ece9; --muted: #a89d99;
+    --pink: #f06bb4; --pink-soft: #3a2630; --border: #3d3335; --green: #4cc57d;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  body {
+    margin: 0;
+    min-height: 100%;
+    background-color: #5a6fd6;
+    background-image:
+      radial-gradient(60% 50% at 8% 12%, #e4553a 0%, transparent 70%),
+      radial-gradient(55% 45% at 88% 15%, #f5d13a 0%, transparent 70%),
+      radial-gradient(60% 50% at 92% 58%, #2fa33c 0%, transparent 70%),
+      radial-gradient(60% 55% at 40% 62%, #2d5be8 0%, transparent 70%),
+      radial-gradient(60% 50% at 8% 88%, #f5d13a 0%, transparent 70%),
+      radial-gradient(60% 50% at 88% 96%, #f06bb4 0%, transparent 70%);
+    background-attachment: fixed;
+    color: var(--text);
+    font-family: "chantaidin", "Sarabun", system-ui, sans-serif;
+    line-height: 1.6;
+    padding: env(safe-area-inset-top, 0px) 16px env(safe-area-inset-bottom, 0px);
+  }
+  @font-face {
+    font-family: "chantaidin";
+    src: url("assets/chantaidin.ttf") format("truetype");
+    font-display: swap;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.35;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+  .flower {
+    position: fixed;
+    top: -40px;
+    left: -60px;
+    width: 340px;
+    height: 340px;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.9;
+  }
+  .wrap { position: relative; z-index: 1; max-width: 560px; margin: 0 auto; padding: 24px 0 48px; }
+  .logo {
+    display: block;
+    width: 120px;
+    height: auto;
+    border-radius: 14px;
+    background: #eceef0;
+    margin: 0 auto 6px;
+  }
+  .wordmark { display: block; width: 110px; max-width: 50%; height: auto; margin: 0 auto 4px; }
+  header { text-align: center; margin-bottom: 24px; }
+  header h1 { margin: 0; font-size: 1.6rem; color: var(--pink); }
+  header p { margin: 4px 0 0; color: #000; font-size: 0.95rem; }
+  section {
+    background: rgba(40, 32, 36, 0.85);
+    color: #fff;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  h2 { font-size: 1.05rem; margin: 0 0 12px; color: var(--pink); }
+  .contact h2 { color: #fff; }
+  label.field { display: block; margin-bottom: 12px; font-size: 0.95rem; }
+  label.field span { display: block; margin-bottom: 4px; color: #fff; }
+  input[type="text"], input[type="email"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--bg);
+    color: var(--text);
+    font: inherit;
+  }
+  input:focus { outline: 2px solid var(--pink); outline-offset: 1px; }
+  .font-card {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px;
+    margin-bottom: 12px;
+  }
+  .font-card h3 { margin: 0 0 8px; font-size: 1rem; }
+  .preview { width: 100%; height: auto; display: block; border-radius: 10px; margin-bottom: 8px; }
+  .sample { font-size: 1.3rem; color: var(--pink); margin-bottom: 8px; word-break: break-all; }
+  .opt {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.95rem;
+  }
+  .opt:hover { background: var(--pink-soft); }
+  .opt .price { margin-left: auto; font-weight: 700; }
+  .opt input { accent-color: var(--pink); width: 18px; height: 18px; }
+  .gift {
+    color: #fff;
+    background: rgba(240, 107, 180, 0.25);
+    border-radius: 12px;
+    padding: 12px 14px;
+    font-size: 0.92rem;
+  }
+  .gift strong { color: var(--pink); }
+  .total-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-top: 8px;
+  }
+  .note { color: #e6dcdf; font-size: 0.85rem; margin-top: 8px; }
+  .pay-box { text-align: center; }
+  .pay-box .name { font-weight: 700; font-size: 1.05rem; }
+  section.contact { text-align: center; }
+  .qr { width: 220px; max-width: 100%; height: auto; border-radius: 12px; display: block; margin: 12px auto; background: #fff; }
+  .delivery { margin-top: 12px; font-size: 0.95rem; }
+  .contact-links { margin-top: 10px; font-size: 0.95rem; line-height: 1.8; }
+  button.primary {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    background: var(--pink);
+    color: #fff;
+    font: inherit;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  button.primary:active { opacity: 0.85; }
+  button.ghost {
+    width: 100%;
+    margin-top: 8px;
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: transparent;
+    color: var(--text);
+    font: inherit;
+    cursor: pointer;
+  }
+  #result { display: none; }
+  #orderText {
+    width: 100%;
+    min-height: 220px;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text);
+    font: inherit;
+    font-size: 0.9rem;
+    resize: vertical;
+  }
+  .error { color: #d24b4b; font-size: 0.9rem; margin: 8px 0 0; display: none; }
+  .ok { color: var(--green); font-size: 0.9rem; margin: 8px 0 0; display: none; }
+</style>
+</head>
+<body>
+<svg class="flower" viewBox="0 0 340 340" aria-hidden="true">
+  <defs>
+    <path id="petal" d="M170 170 C140 130 130 60 170 20 C210 60 200 130 170 170Z" fill="none" stroke="#f06bb4" stroke-width="7" stroke-linejoin="round"/>
+  </defs>
+  <use href="#petal"/>
+  <use href="#petal" transform="rotate(72 170 170)"/>
+  <use href="#petal" transform="rotate(144 170 170)"/>
+  <use href="#petal" transform="rotate(216 170 170)"/>
+  <use href="#petal" transform="rotate(288 170 170)"/>
+</svg>
+<div class="wrap">
+  <header>
+    <img class="logo" id="logo" src="assets/zwanwanni-logo.jpg" alt="zwan logo">
+    <img class="wordmark" src="assets/wordmark.png" alt="zwanwanni">
+    <p>แบบฟอร์มสั่งซื้อฟอนต์</p>
+  </header>
+
+  <section>
+    <h2>1. ข้อมูลผู้สั่งซื้อ</h2>
+    <label class="field"><span>ชื่อ-นามสกุล *</span><input type="text" id="name" placeholder="เช่น สมชาย ใจดี"></label>
+    <label class="field"><span>อีเมล *</span><input type="email" id="email" placeholder="you@example.com"></label>
+    <label class="field"><span>LINE ID (ถ้ามี)</span><input type="text" id="line" placeholder="@yourid"></label>
+  </section>
+
+  <section>
+    <h2>2. เลือกฟอนต์และประเภทการใช้งาน</h2>
+
+    <div class="font-card">
+      <h3>Flower and Love</h3>
+      <img class="preview" src="assets/flower-poster.jpg" alt="ตัวอย่างฟอนต์ Flower and Love">
+      <img class="preview" src="assets/flower-grid.jpg" alt="ตารางตัวอักษร Flower and Love">
+      <label class="opt"><input type="radio" name="flower" value="0"> ไม่ซื้อ</label>
+      <label class="opt"><input type="radio" name="flower" value="99" data-label="Flower and Love (Personal)"> Personal Use <span class="price">99 บาท</span></label>
+      <label class="opt"><input type="radio" name="flower" value="249" data-label="Flower and Love (Commercial)"> Commercial Use <span class="price">249 บาท</span></label>
+    </div>
+
+    <div class="font-card">
+      <h3>Caveman</h3>
+      <img class="preview" src="assets/caveman-preview.jpg" alt="ตัวอย่างฟอนต์ Caveman">
+      <img class="preview" src="assets/caveman-grid.jpg" alt="ตารางตัวอักษร Caveman">
+      <label class="opt"><input type="radio" name="caveman" value="0"> ไม่ซื้อ</label>
+      <label class="opt"><input type="radio" name="caveman" value="99" data-label="Caveman (Personal)"> Personal Use <span class="price">99 บาท</span></label>
+      <label class="opt"><input type="radio" name="caveman" value="249" data-label="Caveman (Commercial)"> Commercial Use <span class="price">249 บาท</span></label>
+    </div>
+
+    <div class="gift">
+      🎁 <strong>ซื้อครบ 2 ฟอนต์ แถมฟรี</strong><br>
+      Digital Calendar 2027 จำนวน 1 แผ่น<br>
+      Digital Sticker สำหรับใช้ในแพลนเนอร์ GoodNotes
+    </div>
+
+    <div class="total-row"><span>ยอดรวม</span><span id="total">0 บาท</span></div>
+    <div class="note" id="giftNote"></div>
+  </section>
+
+  <section>
+    <h2>3. ชำระเงินผ่าน PromptPay</h2>
+    <div class="pay-box">
+      <div class="name">MS. PONDZWAN PLITAPOND</div>
+      <img class="qr" src="assets/promptpay-qr.jpg" alt="QR PromptPay MS. PONDZWAN PLITAPOND">
+      <div class="note">สแกนจ่ายแล้วบันทึกสลิปไว้ แนบตอนส่งคำสั่งซื้อ</div>
+      <div class="delivery">เมื่อยืนยันการชำระเงินเรียบร้อย ทีมงานจะส่งไฟล์ <strong>.ttf</strong> และ <strong>.otf</strong> ให้ทางอีเมล</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>4. ยืนยันคำสั่งซื้อ</h2>
+    <div class="error" id="err">กรุณากรอกชื่อ อีเมล และเลือกฟอนต์อย่างน้อย 1 รายการ</div>
+    <button class="primary" onclick="submitOrder()">สร้างใบสั่งซื้อ</button>
+
+    <div id="result">
+      <div class="ok" id="ok">สร้างใบสั่งซื้อแล้ว กดคัดลอกแล้วส่งให้ทางร้าน พร้อมสลิปการโอน</div>
+      <textarea id="orderText" readonly style="margin-top:12px"></textarea>
+      <button class="ghost" onclick="copyOrder()">คัดลอกใบสั่งซื้อ</button>
+    </div>
+  </section>
+  <section class="contact">
+    <h2>ติดต่อเรา</h2>
+    <div class="contact-links">
+      IG: zwanwanni.studio<br>
+      E-mail: zwanwanni@gmail.com
+    </div>
+  </section>
+</div>
+
+<script>
+  const PRICE_PER_FONT = 0; // ใช้ค่าจากตัวเลือกด้านบน
+  const names = ["flower", "caveman"];
+
+  function getChoices() {
+    const items = [];
+    let total = 0;
+    let fontCount = 0;
+    document.querySelectorAll('input[type="radio"][data-label]:checked').forEach(r => {
+      items.push({ label: r.dataset.label, price: Number(r.value) });
+      total += Number(r.value);
+    });
+    // นับจำนวนฟอนต์ที่เลือกจริง (ไม่นับ "ไม่ซื้อ")
+    names.forEach(n => {
+      const checked = document.querySelector(`input[name="${n}"]:checked`);
+      if (checked && Number(checked.value) > 0) fontCount++;
+    });
+    return { items, total, fontCount };
+  }
+
+  function updateTotal() {
+    const { total, fontCount } = getChoices();
+    document.getElementById("total").textContent = total.toLocaleString("th-TH") + " บาท";
+    const note = document.getElementById("giftNote");
+    if (fontCount === 2) {
+      note.textContent = "ได้รับของแถมครบตามเงื่อนไขแล้ว";
+    } else if (fontCount === 1) {
+      note.textContent = "เลือกเพิ่มอีก 1 ฟอนต์ เพื่อรับของแถม";
+    } else {
+      note.textContent = "";
+    }
+  }
+
+  document.querySelectorAll('input[type="radio"]').forEach(r => r.addEventListener("change", updateTotal));
+
+  function submitOrder() {
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const line = document.getElementById("line").value.trim();
+    const { items, total, fontCount } = getChoices();
+    const err = document.getElementById("err");
+
+    if (!name || !email || items.length === 0) {
+      err.style.display = "block";
+      document.getElementById("result").style.display = "none";
+      return;
+    }
+    err.style.display = "none";
+
+    let text = "สั่งซื้อฟอนต์ zwanwanni.studio\n";
+    text += "ชื่อ: " + name + "\n";
+    text += "อีเมล: " + email + "\n";
+    if (line) text += "LINE: " + line + "\n";
+    text += "\nรายการ:\n";
+    items.forEach(i => { text += "- " + i.label + " : " + i.price + " บาท\n"; });
+    text += "\nยอดรวม: " + total + " บาท\n";
+    if (fontCount === 2) {
+      text += "ของแถม: Digital Calendar 2027 x1 และDigital Sticker (GoodNotes)\n";
+    }
+    text += "\nแนบสลิปการโอนผ่าน PromptPay มาด้วยนะคะ";
+
+    document.getElementById("orderText").value = text;
+    document.getElementById("result").style.display = "block";
+    document.getElementById("ok").style.display = "block";
+  }
+
+  function copyOrder() {
+    const ta = document.getElementById("orderText");
+    ta.select();
+    try { document.execCommand("copy"); } catch (e) {}
+  }
+
+  updateTotal();
+</script>
+</body>
+</html>
 

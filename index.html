@@ -57,6 +57,16 @@
     src: url("assets/chantaidin.ttf") format("truetype");
     font-display: swap;
   }
+  @font-face {
+    font-family: "FlowerAndLoveCard";
+    src: url("assets/flower-title.woff") format("woff");
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "CavemanCard";
+    src: url("assets/caveman-title.woff") format("woff");
+    font-display: swap;
+  }
   body::before {
     content: "";
     position: fixed;
@@ -120,6 +130,8 @@
     margin-bottom: 12px;
   }
   .font-card h3 { margin: 0 0 8px; font-size: 1rem; }
+  .font-card h3.t-flower { font-family: "FlowerAndLoveCard", "chantaidin", sans-serif; font-size: 1.6rem; font-weight: 400; color: var(--pink); }
+  .font-card h3.t-caveman { font-family: "CavemanCard", "chantaidin", sans-serif; font-size: 1.6rem; font-weight: 400; color: var(--pink); }
   .preview { width: 100%; height: auto; display: block; border-radius: 10px; margin-bottom: 8px; }
   .sample { font-size: 1.3rem; color: var(--pink); margin-bottom: 8px; word-break: break-all; }
   .opt {
@@ -132,7 +144,9 @@
     font-size: 0.95rem;
   }
   .opt:hover { background: var(--pink-soft); }
-  .opt .price { margin-left: auto; font-weight: 700; }
+  .opt .price { margin-left: auto; font-weight: 700; white-space: nowrap; }
+  .optname, .nb { white-space: nowrap; }
+  .fl { width: 1.1em; height: 1.1em; vertical-align: -0.2em; margin-right: 4px; display: inline-block; }
   .opt input { accent-color: var(--pink); width: 18px; height: 18px; }
   .gift {
     color: #fff;
@@ -156,6 +170,7 @@
   .qr { width: 220px; max-width: 100%; height: auto; border-radius: 12px; display: block; margin: 12px auto; background: #fff; }
   .delivery { margin-top: 12px; font-size: 0.95rem; }
   .contact-links { margin-top: 10px; font-size: 0.95rem; line-height: 1.8; }
+  .contact-links a { color: var(--pink); font-weight: 700; }
   button.primary {
     width: 100%;
     padding: 14px;
@@ -169,32 +184,14 @@
     cursor: pointer;
   }
   button.primary:active { opacity: 0.85; }
-  button.ghost {
-    width: 100%;
-    margin-top: 8px;
-    padding: 12px;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    background: transparent;
-    color: var(--text);
-    font: inherit;
-    cursor: pointer;
-  }
-  #result { display: none; }
-  #orderText {
-    width: 100%;
-    min-height: 220px;
-    padding: 12px;
-    border-radius: 10px;
-    border: 1px solid var(--border);
-    background: var(--bg);
-    color: var(--text);
-    font: inherit;
-    font-size: 0.9rem;
-    resize: vertical;
-  }
+  .pdpa { background: rgba(255,255,255,0.08); border-radius: 12px; padding: 12px 14px; margin-bottom: 12px; font-size: 0.88rem; }
+  .pdpa p { margin: 6px 0; line-height: 1.6; color: #e6dcdf; }
+  .consent { display: flex; gap: 10px; align-items: flex-start; margin-top: 10px; cursor: pointer; color: #fff; }
+  .consent input { accent-color: var(--pink); width: 20px; height: 20px; flex: none; margin-top: 3px; }
   .error { color: #d24b4b; font-size: 0.9rem; margin: 8px 0 0; display: none; }
-  .ok { color: var(--green); font-size: 0.9rem; margin: 8px 0 0; display: none; }
+  .ok { color: var(--green); font-size: 0.95rem; font-weight: 700; margin: 12px 0 0; display: none; }
+  button.primary:disabled { opacity: 0.6; cursor: default; }
+  .linebtn { display: none; text-align: center; margin-top: 12px; padding: 14px; border-radius: 12px; background: #06c755; color: #fff; font-weight: 700; text-decoration: none; }
 </style>
 </head>
 <body>
@@ -225,28 +222,29 @@
   <section>
     <h2>2. เลือกฟอนต์และประเภทการใช้งาน</h2>
 
-    <div class="font-card">
-      <h3>Flower and Love</h3>
+    <div class="font-card f-flower">
+      <h3 class="t-flower">Flower and Love</h3>
       <img class="preview" src="assets/flower-poster.jpg" alt="ตัวอย่างฟอนต์ Flower and Love">
       <img class="preview" src="assets/flower-grid.jpg" alt="ตารางตัวอักษร Flower and Love">
-      <label class="opt"><input type="radio" name="flower" value="0"> ไม่ซื้อ</label>
-      <label class="opt"><input type="radio" name="flower" value="99" data-label="Flower and Love (Personal)"> Personal Use <span class="price">99 บาท</span></label>
-      <label class="opt"><input type="radio" name="flower" value="249" data-label="Flower and Love (Commercial)"> Commercial Use <span class="price">249 บาท</span></label>
+      <label class="opt"><input type="radio" name="flower" value="0"> ไม่รับคับ</label>
+      <label class="opt"><input type="radio" name="flower" value="99" data-label="Flower and Love (Personal)"> <span class="optname">Personal Use</span> <span class="price">99 บาท</span></label>
+      <label class="opt"><input type="radio" name="flower" value="249" data-label="Flower and Love (Commercial)"> <span class="optname">Commercial Use</span> <span class="price">249 บาท</span></label>
     </div>
 
-    <div class="font-card">
-      <h3>Caveman</h3>
+    <div class="font-card f-caveman">
+      <h3 class="t-caveman">Caveman</h3>
       <img class="preview" src="assets/caveman-preview.jpg" alt="ตัวอย่างฟอนต์ Caveman">
       <img class="preview" src="assets/caveman-grid.jpg" alt="ตารางตัวอักษร Caveman">
-      <label class="opt"><input type="radio" name="caveman" value="0"> ไม่ซื้อ</label>
-      <label class="opt"><input type="radio" name="caveman" value="99" data-label="Caveman (Personal)"> Personal Use <span class="price">99 บาท</span></label>
-      <label class="opt"><input type="radio" name="caveman" value="249" data-label="Caveman (Commercial)"> Commercial Use <span class="price">249 บาท</span></label>
+      <label class="opt"><input type="radio" name="caveman" value="0"> ไม่รับคับ</label>
+      <label class="opt"><input type="radio" name="caveman" value="99" data-label="Caveman (Personal)"> <span class="optname">Personal Use</span> <span class="price">99 บาท</span></label>
+      <label class="opt"><input type="radio" name="caveman" value="249" data-label="Caveman (Commercial)"> <span class="optname">Commercial Use</span> <span class="price">249 บาท</span></label>
     </div>
 
     <div class="gift">
-      🎁 <strong>ซื้อครบ 2 ฟอนต์ แถมฟรี</strong><br>
-      Digital Calendar 2027 จำนวน 1 แผ่น<br>
-      Digital Sticker สำหรับใช้ในแพลนเนอร์ GoodNotes
+      <svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="flo" viewBox="0 0 24 24"><g fill="#f06bb4"><circle cx="12" cy="6.5" r="4"/><circle cx="17.2" cy="10.2" r="4"/><circle cx="15.2" cy="16.4" r="4"/><circle cx="8.8" cy="16.4" r="4"/><circle cx="6.8" cy="10.2" r="4"/></g><circle cx="12" cy="12" r="2.6" fill="#fff3a3"/></symbol></svg>
+      🎁 <strong><span class="nb">ซื้อครบ 2 ฟอนต์</span> <span class="nb">แถมฟรี</span></strong><br>
+      <svg class="fl" viewBox="0 0 24 24" aria-hidden="true"><use href="#flo"/></svg><span class="nb">Digital Calendar 2027</span> <span class="nb">จำนวน 1 แผ่น</span><br>
+      <svg class="fl" viewBox="0 0 24 24" aria-hidden="true"><use href="#flo"/></svg><span class="nb">Digital Sticker</span> <span class="nb">สำหรับใช้ใน</span><span class="nb">แพลนเนอร์</span> <span class="nb">GoodNotes</span>
     </div>
 
     <div class="total-row"><span>ยอดรวม</span><span id="total">0 บาท</span></div>
@@ -258,26 +256,32 @@
     <div class="pay-box">
       <div class="name">MS. PONDZWAN PLITAPOND</div>
       <img class="qr" src="assets/promptpay-qr.jpg" alt="QR PromptPay MS. PONDZWAN PLITAPOND">
-      <div class="note">สแกนจ่ายแล้วบันทึกสลิปไว้ แนบตอนส่งคำสั่งซื้อ</div>
+      <div class="note">สแกนจ่ายแล้วเก็บสลิปไว้ หลังกดยืนยันคำสั่งซื้อ ให้ส่งสลิปทาง LINE OA ของร้าน</div>
       <div class="delivery">เมื่อยืนยันการชำระเงินเรียบร้อย ทีมงานจะส่งไฟล์ <strong>.ttf</strong> และ <strong>.otf</strong> ให้ทางอีเมล</div>
     </div>
   </section>
 
   <section>
     <h2>4. ยืนยันคำสั่งซื้อ</h2>
-    <div class="error" id="err">กรุณากรอกชื่อ อีเมล และเลือกฟอนต์อย่างน้อย 1 รายการ</div>
-    <button class="primary" onclick="submitOrder()">สร้างใบสั่งซื้อ</button>
-
-    <div id="result">
-      <div class="ok" id="ok">สร้างใบสั่งซื้อแล้ว กดคัดลอกแล้วส่งให้ทางร้าน พร้อมสลิปการโอน</div>
-      <textarea id="orderText" readonly style="margin-top:12px"></textarea>
-      <button class="ghost" onclick="copyOrder()">คัดลอกใบสั่งซื้อ</button>
+    <div class="pdpa">
+      <strong>การคุ้มครองข้อมูลส่วนบุคคล (PDPA)</strong>
+      <p>zwanwanni.studio จะเก็บ ชื่อ-นามสกุล อีเมล และ LINE ID (ถ้ามี) รวมถึงรายการที่สั่งซื้อ เพื่อใช้ติดต่อกลับ ตรวจสอบการชำระเงิน และจัดส่งไฟล์ฟอนต์กับของแถมทางอีเมลเท่านั้น</p>
+      <p>ข้อมูลจะถูกส่งผ่านบริการรับฟอร์มของบุคคลภายนอก (Web3Forms) มาที่อีเมลของทางร้าน และเก็บไว้เท่าที่จำเป็นต่อการดำเนินการสั่งซื้อและตามที่กฎหมายกำหนด สลิปการโอนที่ส่งทาง LINE Official Account ของร้านจะใช้เพื่อตรวจสอบการชำระเงินเท่านั้น</p>
+      <p>หากต้องการขอเข้าถึง แก้ไข หรือลบข้อมูล ติดต่อ zwanwanni@gmail.com</p>
+      <label class="consent"><input type="checkbox" id="consent"> <span>ฉันยินยอมให้ zwanwanni.studio เก็บและใช้ข้อมูลของฉันตามที่ระบุข้างต้น</span></label>
     </div>
+    <div class="error" id="err">กรุณากรอกชื่อ อีเมล เลือกฟอนต์อย่างน้อย 1 รายการ และติ๊กยินยอมการเก็บข้อมูล</div>
+    <button class="primary" id="submitBtn" onclick="submitOrder()">ยืนยันคำสั่งซื้อ</button>
+
+    <div class="ok" id="ok"></div>
+    <a id="lineBtn" class="linebtn" href="https://lin.ee/PptNCKW" target="_blank" rel="noopener">ส่งสลิปทาง LINE OA</a>
+    <div class="error" id="sendFail">ส่งคำสั่งซื้อไม่สำเร็จ กรุณากดยืนยันอีกครั้ง หรือติดต่อทาง IG, LINE หรืออีเมลด้านล่าง</div>
   </section>
   <section class="contact">
     <h2>ติดต่อเรา</h2>
     <div class="contact-links">
-      IG: zwanwanni.studio<br>
+      IG: <a href="https://www.instagram.com/zwanwanni.studio" target="_blank" rel="noopener">zwanwanni.studio</a><br>
+      LINE OA: <a href="https://lin.ee/PptNCKW" target="_blank" rel="noopener">zwanwanni.studio</a><br>
       E-mail: zwanwanni@gmail.com
     </div>
   </section>
@@ -285,6 +289,27 @@
 
 <script>
   const names = ["flower", "caveman"];
+
+  // Access Key จาก web3forms.com ข้อมูลลูกค้าจะถูกส่งเข้าอีเมลทีมงานทันที
+  const WEB3FORMS_KEY = "9d0d5404-3f0c-4f09-9b63-5c4c90840adf";
+
+  async function sendOrder(payload) {
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_KEY,
+          subject: "ออเดอร์ใหม่ zwanwanni.studio - " + payload.name,
+          ...payload
+        })
+      });
+      const data = await res.json();
+      return data.success === true;
+    } catch (e) {
+      return false;
+    }
+  }
 
   function getChoices() {
     const items = [];
@@ -317,41 +342,55 @@
 
   document.querySelectorAll('input[type="radio"]').forEach(r => r.addEventListener("change", updateTotal));
 
-  function submitOrder() {
+  async function submitOrder() {
     const name = document.getElementById("name").value.trim();
     const email = document.getElementById("email").value.trim();
     const line = document.getElementById("line").value.trim();
     const { items, total, fontCount } = getChoices();
+    const consent = document.getElementById("consent").checked;
     const err = document.getElementById("err");
+    const ok = document.getElementById("ok");
+    const fail = document.getElementById("sendFail");
+    const btn = document.getElementById("submitBtn");
+    const lineBtn = document.getElementById("lineBtn");
 
-    if (!name || !email || items.length === 0) {
+    lineBtn.style.display = "none";
+    ok.style.display = "none";
+    fail.style.display = "none";
+
+    if (!name || !email || items.length === 0 || !consent) {
       err.style.display = "block";
-      document.getElementById("result").style.display = "none";
       return;
     }
     err.style.display = "none";
 
-    let text = "สั่งซื้อฟอนต์ zwanwanni.studio\n";
-    text += "ชื่อ: " + name + "\n";
-    text += "อีเมล: " + email + "\n";
-    if (line) text += "LINE: " + line + "\n";
-    text += "\nรายการ:\n";
-    items.forEach(i => { text += "- " + i.label + " : " + i.price + " บาท\n"; });
-    text += "\nยอดรวม: " + total + " บาท\n";
-    if (fontCount === 2) {
-      text += "ของแถม: Digital Calendar 2027 x1 และ Digital Sticker (GoodNotes)\n";
+    const payload = {
+      createdAt: new Date().toISOString(),
+      name: name,
+      email: email,
+      line: line,
+      items: items.map(i => i.label).join(", "),
+      total: total,
+      gift: fontCount === 2 ? "ใช่ (Digital Calendar 2027 + Digital Sticker)" : "ไม่",
+      pdpaConsent: "ยินยอม",
+      slipStatus: "รอลูกค้าส่งสลิปทาง LINE OA"
+    };
+
+    btn.disabled = true;
+    btn.textContent = "กำลังส่งคำสั่งซื้อ...";
+
+    const sent = await sendOrder(payload);
+
+    if (sent) {
+      btn.textContent = "ส่งคำสั่งซื้อแล้ว";
+      ok.textContent = "ได้รับคำสั่งซื้อของคุณแล้ว กรุณาส่งสลิปการโอนทาง LINE OA ของร้าน พร้อมแจ้งชื่อที่ใช้สั่งซื้อ";
+      ok.style.display = "block";
+      lineBtn.style.display = "block";
+    } else {
+      btn.disabled = false;
+      btn.textContent = "ยืนยันคำสั่งซื้อ";
+      fail.style.display = "block";
     }
-    text += "\nแนบสลิปการโอนผ่าน PromptPay มาด้วยนะคะ";
-
-    document.getElementById("orderText").value = text;
-    document.getElementById("result").style.display = "block";
-    document.getElementById("ok").style.display = "block";
-  }
-
-  function copyOrder() {
-    const ta = document.getElementById("orderText");
-    ta.select();
-    try { document.execCommand("copy"); } catch (e) {}
   }
 
   updateTotal();
